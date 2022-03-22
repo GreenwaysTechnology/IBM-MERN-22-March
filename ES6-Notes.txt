@@ -1,0 +1,680 @@
+
+Software setup:
+
+1.node
+2.vs code
+
+Pre Skill:
+
+1.HTML 5
+2.CSS 3
+3.Javascript - ES 6
+.............................................................................................
+
+
+What is Javascript?
+
+java script is one of the Programming language.
+
+Style of Javascript:
+
+JS is Object based, functional style, event driven pl.
+
+
+Object based vs object oriented:
+................................
+
+Object Oriented Principles:
+...........................
+
+1.Abstraction
+2.Encapsulation
+3.Hierarchy
+4.Typing
+5.Modularity
+----------------------
+6.Concurrency
+7.Persistency
+
+
+if any language follows all oo concepts, object oriented language.
+
+if any language is not following any one object oriented principle or paritially implements
+that language is called as 'object based language'.
+
+What type of apps you can build using js?
+
+Today you can use js for building any type of apps.
+
+JS created for HTML Document creation,maniupulation  language inside browser :DOM Programming.
+
+When js was created?
+
+In 1996, js was created by Netscap communications.
+
+When js came out for use?
+
+1996 , JS submitted to ECMA Committe.
+
+1997-> JAVA SCRIPT 1.0 -> es 1
+es 3 -1999
+es 4 -2006
+es 5 -2007
+es 6 -2012-2015. - ecma 2015 es 6
+es6 7,8,9....
+////////////////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+Javascript Runtime/JavaScript Engine:
+
+Java script VM/ Execution engine/Runtime
+
+-embeded
+ -inside another program :  browser
+-standalone
+ -google v8. -Node.js
+/////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+Learning path:
+
+es 6:
+
+1. java  script LANGUAGE fundamentals
+2. java script functional programming 
+3. Object based features and implementation
+           isomorphic features  - features can be used in client and server
+.................................................................................................
+4. DOM 
+5. NETWORK Progamming - ajax
+etc....
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+JS Fundmentals
+
+-variables
+-data types
+-values/literals
+-operators
+-control statement/structures
+-loops 
+-conditional statement.
+
+
+hello world.
+
+How to run js program?
+
+1.in browser
+2.in command line - server side -using node.js
+
+
+1.in browser
+
+html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>ES 6 Apps for React</h1>
+    <script src="src/index.js"></script>
+</body>
+</html>
+
+2.in command line using node
+node src/index.js
+Hello ES6
+hai
+
+
+Variables,data/values: data type.
+..................................
+
+Programming languages can be classified based on data types(types)
+
+1.static langugages/strong typed programming language
+ if language compiler verifies , the type of variable during compile time, those languages
+are called static programming language.
+
+  int a=10;
+  a="hello" ; compile time error.
+
+eg : java,c++,c,C#,Kotlin
+
+
+2.dynamic languages/weak typed programming language.
+
+
+  if language compiler verifies , the type of variable during runtime time, those languages
+are called dynamic/weakly typed programming language.
+
+  var i=10
+  i="hello" // no error
+
+JS follows dynamic typed.
+
+
+1. java  script fundamentals
+
+variable,types, values.
+
+javascript is untyped/dyamic typed language.
+
+keyword variableName=value(literals)
+
+var | let | const | this | variablename=literal
+
+
+var-es5
+let and const -es6 to replace var.
+
+this - for object variables
+
+literals - values: based on literal only the type of variable is decided during runtime.
+
+
+types of literals
+
+1.string
+2.number
+3.boolean
+4.undefined
+5.nan
+6.infinity
+7.null
+8.function
+9.object
+
+
+types ;
+
+1.string
+2.number - number,infinity,NaN
+3.boolean
+4.undefined
+5.function
+6.object - null, object
+
+
+
+strings:
+//literals demo //variables
+
+//es 5 vs es 6
+//strings: "" '' ``
+var firstName = "Subramaian"
+var lastName = 'Murugan'
+//es 5 style of string concation
+// var fullName = firstName + lastName  //string concatation
+
+//es 6 back tick notation ``
+var fullName = ` Name => ${firstName} ${lastName}`  //string interpolation
+
+console.log(fullName)
+
+//let keyword replaces var in es 6
+let city = 'Coimbatore'
+let state = "Tamil Nadu"
+console.log(`City ${city} State ${state}`)
+
+//multi line strings using es 5 pattern:
+let title = 'Google'
+let doc = "<html>" +
+    "<head>" +
+    "<title>" + title + "</title>" +
+    "</head>" +
+    "<body>" +
+    "<h1>Hello</h1>" +
+    "</body>";
+console.log(doc)
+
+let docOne = `<html>
+           <head>
+            <title>${title}</title>
+            </head>
+          <body>
+            <h1>Hello</h1>
+          </body>
+        `;
+console.log(docOne)
+
+
+
+2.Numbers
+
+-all numbers size is 64 bit aka double.
+
+let salary = 10000;
+console.log(`Salary ${salary}`);
+let totalSalary = salary * 100
+console.log(`Total salary ${salary}`);
+
+4.NaN -  Not a Number
+
+ -NaN - not a number; it is numerical error code.during numerical computation, 
+
+js engine
+ -may throw error - NaN ; 
+ -NaN is not valid value, it is error , need to be fixed if you get.
+
+when you will get NaN.
+1.if you do compuation against undefined variables.
+
+//NaN Use cases
+
+let qty;
+let price = 100;
+
+let totalPrice = qty * price
+console.log(`Qty ${qty} Price ${price} Total Price ${totalPrice}`)
+
+//Type conversion:
+//type conversion:implicit
+let x = "10"; //string
+let y = 10; //number
+let c = x * y; // x is converted into number and computation takes place
+console.log(`C ${c}`)
+
+//explicit conversion
+let d = parseFloat(x) * y;
+console.log(`D ${d}`)
+
+//NaN and type conversion
+
+let a = "$10";
+let b = 100;
+let res = a * b;
+console.log(`res ${res}`)
+
+5.infinity
+
+-div/0 -
+
+let x =100;
+let y =0
+let c = x/y;
+console.log(`C ${c}`)
+///////////////////////////////////////////////////////////////////////////////////////////
+
+typeof operator : to know the runtime type of variable
+let a = 10;
+console.log(`a type is ${typeof a}`);
+a = 'Hello';
+console.log(`a type is ${typeof a}`);
+a = true;
+console.log(`a type is ${typeof a}`);
+a = undefined;
+console.log(`a type is ${typeof a}`);
+a = 10 * undefined; //NaN --->number type
+console.log(`a type is (NaN) ${typeof a}`);
+a = 100 / 0;//infinity ---->number
+console.log(`a type is (Infinity) ${typeof a}`);
+///////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
+
+What can be true or false?
+
+decision making : if..else ,tenary operator
+
+in javascript is every thing is true execept the following values 
+
+Falsy values
+
+ * 
+ *  1.boolean false
+ *  2.Empty string "" ,''
+ *  3.0
+ *  4.undefined
+ *  5.NaN
+ *  6.null
+ */
+let isActive = true;
+
+if (isActive) {
+    console.log('Active')
+} else {
+    console.log('inactive')
+}
+
+let firstName = ""
+if (firstName) {
+    console.log('Name is Present')
+} else {
+    console.log('Name is not  Present')
+}
+
+let start = 0;
+if (start) {
+    console.log('start')
+} else {
+    console.log('no start')
+}
+
+let total;
+if (total) {
+    console.log('total found')
+} else {
+    console.log('total not found')
+}
+
+let value = 100 * total;
+if (value) {
+    console.log('value found')
+} else {
+    console.log('value not found')
+}
+
+value = 100 / 0;
+if (value) {
+    console.log('value found -infinity')
+} else {
+    console.log('value not found -infinity')
+}
+..............................................................................................
+..............................................................................................
+
+Operators:
+
+let a = 100;
+let b = 100;
+//double equal operator
+if (a == b) {
+    console.log('equal')
+} else {
+    console.log('not equal')
+}
+if (a === b) {
+    console.log('equal')
+} else {
+    console.log('not equal')
+}
+
+let x = "100";
+let y = 100;
+if (x == y) {
+    console.log('X and y equal')
+} else {
+    console.log('X and y not equal')
+}
+if (x === y) {
+    console.log('X and y equal')
+} else {
+    console.log('X and y not equal')
+}
+Recommended Operator is  "===".
+.............................................................................................
+// Tenary operator ; to replace if ...else lader
+let x =100;
+let y =100;
+x === y ? console.log('equal') : console.log('not equal')
+
+let firstName = '';
+
+let response = firstName ? 'You have firstName' : 'You dont have firstName'
+console.log(response);
+
+///////////////////////////////////////////////////////////////////////////////////////////
+
+const:
+//const keyword  - readonly ; once variable initalized you cant reinitalize
+
+let a = 10;
+console.log(a)
+a = 30;
+console.log(a);
+//
+const b =90;
+console.log(b);
+//b=888;
+..............................................................................................
+.............................................................................................
+					Functional Programming
+............................................................................................
+
+-Functional programming is like object oriented programming, It is another style of write apps.
+
+-Functional programming and its principles were introduced in 1950's.
+
+-Functional programming is the implementation of  one mathmetical problems.
+
+Lambda calculus 
+   (also written as λ-calculus) is a formal system in mathematical logic for expressing computation based on function abstraction and application using variable binding and substitution
+
+According to Lambda Calculus /  Functional Programming:
+
+1.function is first class citizen.
+
+first class citizen:
+ functions can be treated as "values" like numbers,strings,booleans.
+ Since function is value can be stored into a variable,passed around,returned from another function. 
+
+eg:
+  let a =10; // 10 is value and its type is number
+  let name ="Subramanian" // it is value and its type is string
+  let isValid =true //it is value and its type is boolean
+
+in the similar context , function also value and it has type called function type.
+
+variables can be used for computation,printing.
+
+  eg:
+    let res = a *10;
+    print res , a;
+
+          "Variables holding functions , can be used invoke functions".
+
+function add(a = 1, b = 2) {
+    return a + b;
+
+}
+console.log(add())
+//store the function into variable
+let adder = add;
+
+console.log(adder())
+/////////////////////////////////////////////////////////////////////////////////////
+//Syntax 2:
+
+//anonmous function
+
+let greet = function () {
+    console.log('greet')
+};
+greet();
+
+//anonmous functions with params and args
+let multiply = function (a = 0, b = 0) {
+    console.log(`a ${a} b ${b}`)
+    return a * b;
+};
+console.log(multiply(3,5))
+
+.............................................................................................
+
+//how to pass function as parameter
+
+let add = function (a = 1, b = 2) {
+    return a + b;
+}
+console.log(add(2, 3)) //here we pass numbers.
+
+//in js you can pass any literal
+//higher order function : function as param
+function sayGreet(greet) {
+    greet()
+}
+sayGreet(function () {
+    console.log('hello')
+})
+//parameters and arg in the hof
+function sayHello(hello) {
+    hello('subramanian')
+}
+//passing funcition ; inline
+sayHello(function (name = '') {
+    console.log(`hello ${name}`)
+})
+let hello = function (name = '') {
+    console.log(`hello ${name}`)
+};
+sayHello(function (name = '') {
+    console.log(`hello ${name}`)
+})
+sayHello(hello)
+///////////////
+
+function login(username, password, success, failure) {
+    //logic
+    if (username === 'admin' && password === 'admin') {
+        success('login success')
+    } else {
+        failure('login failed')
+    }
+}
+login('admin', 'admin', function (status) {
+    console.log(status)
+}, function (error) {
+    console.log(error)
+})
+login('foo', 'foo', function (status) {
+    console.log(status)
+}, function (error) {
+    console.log(error)
+})
+.............................................................................................
+Arrow functions:
+- ES 6 function literal
+- To reduce lot of code- make simple code
+- we have some advanced concept like "this" binding.
+
+
+
+//es 5 
+let hello = function () {
+    console.log('hello')
+}
+hello();
+
+//arrow function:
+let hai = () => {
+    //function body 
+    console.log('hai arrow')
+};
+hai();
+//how to reduce code as much as possible.
+//if function body has only one line of code : can remove {}
+hai = () => console.log('hai arrow');
+hai();
+
+//params and args
+let add = (a = 1, b = 1) => {
+    let c = a + b;
+    console.log(c)
+}
+add(1, 2);
+
+//return
+let multiply = (a = 1, b = 1) => {
+    return a * b;
+}
+console.log(multiply(1, 2));
+
+//if only return statement, we can remove {} and return statement
+
+multiply = (a = 1, b = 1) => a * b
+console.log(multiply(1, 2));
+
+
+function sayGreet(greet) {
+    greet()
+}
+sayGreet(() => console.log('hello'))
+
+const login = (username, password, success, failure) => {
+    //logic
+    if (username === 'admin' && password === 'admin') {
+        success('login success')
+    } else {
+        failure('login failed')
+    }
+}
+//if arg has no default value, and its single arg, we can remove ()
+login('admin', 'admin', status => console.log(status), error => console.log(error))
+............................................................................................
+Object based Programming:
+..........................
+
+
+
+//es 5 
+function Employee() {
+    //instance variables
+    this.id = 1;
+    this.name = 'subramanian'
+    //instance methods
+    this.calculateSalary = function () {
+        return 10;
+    }
+}
+///emp - reference variable which references the location of object.
+//new is keyword - memory allocation operator
+//Employee(); Constructor call
+let emp = new Employee();
+console.log(`Id : ${emp.id} Name : ${emp.name} Salary :  ${emp.calculateSalary()}`)
+
+class Customer {
+    //instance variables
+    id = 1;
+    name = 'subramanian'
+    //instance methods
+    // calculateSalary = function () {
+    //     return 10;
+    // // }
+    // calculateSalary = () => {
+    //     return 10;
+    // }
+    calculateInvoice() {
+        return 10;
+    }
+}
+//cust - reference variable which references the location of object.
+//new is keyword - memory allocation operator
+//Customer(); Constructor call
+let cust = new Customer();
+console.log(`Id : ${cust.id} Name : ${cust.name} Invoice :  ${cust.calculateInvoice()}`)
+
+
+let product = {
+    id: 1,
+    name: 'Phone',
+    // calculateQty: function(){
+    //     return 10;
+    // }
+    // calculateQty: ()=>{
+    //     return 10;
+    // }
+    //es 6 method syntax
+    calculateQty() {
+        return 10
+    },
+    save() {
+        return 'save'
+    },
+    findAll() {
+        return 'findAll'
+    }
+};
+console.log(`Product id ${product.id} name ${product.name} Qty ${product.calculateQty()} ${product.findAll()} ${product.save()} `)
+
+
+
+
+
