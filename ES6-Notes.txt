@@ -673,6 +673,175 @@ let product = {
     }
 };
 console.log(`Product id ${product.id} name ${product.name} Qty ${product.calculateQty()} ${product.findAll()} ${product.save()} `)
+..............................................................................................
+.
+				Modules
+
+Javascript modularity:
+
+
+Modularity:
+..........
+
+In java Modularity , is presented via "Packages"
+
+Package organize the code  logically.
+
+Customer.java
+
+package com.ibm.cms
+
+public class Customer{}
+
+Java organizes code folders and files Physically.
+
+d:/javaapps/src/
+    com/ibm/cms/Customer.java
+
+
+What about javascript Modularity?
+
+ Javascript is file based modularity physically
+ but logically there is no such modularity at language level.
+
+ collection of variable declarations and function.
+
+Once js started growing in large scale, dev struck to organize code.
+
+2000, Smart developers started thinking about how to modualrize js code.
+ 
+
+Module design patterns came.
+
+1.Namespace design pattern : 2000 : jquery
+2.AMD -Async Module Defintion : dojo
+---------------------------------------------------------
+3.CJS - Common JS =  namespace + amd
+4.ES 6 Module design pattern  = amd + cjs
+------------------------------------------------------------
+5.System = AMD = CJS + ES 6
+6.UMD = NAMESPACE + AMD + CJS = ES 6
+...........................................................................................
+
+
+ES 6 Modules:
+
+How to share code?
+  export , export default
+How to link files
+ import
+
+src/mylib.js
+//code sharing :
+//code can be variables having any literals
+//code can be functions,class,objects,arrays
+
+// export const firstName = 'Subramanian'
+// export const lastName = 'Murugan'
+// export const rating = 10
+// export const isActive = true
+// export const skills = ["React", "Javascript", "Ecommerce"]
+// export const calcuate = () => 100
+
+const firstName = 'Subramanian'
+const lastName = 'Murugan'
+const rating = 10
+const isActive = true
+const skills = ["React", "Javascript", "Ecommerce"]
+const calcuate = () => 100
+
+export { firstName, lastName, rating, isActive, skills, calcuate };
+
+src/index.js
+import { firstName, lastName, rating, skills, isActive, calcuate } from './mylib'
+
+console(firstName,lastName,rating,skills,isActive,calcuate())
+
+After running inside browser:
+
+Uncaught SyntaxError: Cannot use import statement outside a module
+
+Why this error?
+   The browser cant understand es 6 modules directly. 
+   The browser has no facility to load and link files nativly
+
+How to run this?
+  we need to use build tools, to pack our code into browser understandable format.
+
+build tools
+
+1.webpack
+
+How to install webpack in our project?
+
+Steps:
+
+1.make sure that you have package.json file
+ if not , create package.json file
+
+npm init
+
+2.install webpack
+  npm install webpack webpack-cli --save-dev
+
+3.add webpack.config.js in the project root dir
+
+const path = require('path');
+
+module.exports = {
+  entry: './src/index.js',
+  mode:'development',
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'bundle.js',
+  },
+};
+
+4.build /bundle your code
+ open package.json
+ add entry into scripts
+
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  }
+
+5.start bundling
+  open cmd and run the following command
+npm run build
+
+> es6-apps@1.0.0 build
+> webpack
+
+asset bundle.js 5.19 KiB [emitted] (name: main)
+runtime modules 670 bytes 3 modules
+cacheable modules 758 bytes
+  ./src/index.js 146 bytes [built] [code generated]
+  ./src/mylib.js 612 bytes [built] [code generated]
+webpack 5.70.0 compiled successfully in 113 ms
+
+6.add bundle file inside index.html
+     <script src="dist/bundle.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
 
 
 
