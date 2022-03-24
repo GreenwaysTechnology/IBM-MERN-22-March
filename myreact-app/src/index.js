@@ -1,18 +1,5 @@
-import React from 'react';
-import ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom';
+import App from './App';
 
 
-class Header extends React.Component {
-    
-    render(){
-        return <nav>
-            <h1>IBM !!</h1>
-        </nav>
-    }
-}
-
-
-ReactDOM.render(<Header></Header>, document.getElementById('root'))
-
-
-
+ReactDOM.render(<App />, document.getElementById('root'))

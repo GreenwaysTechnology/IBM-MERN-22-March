@@ -916,12 +916,466 @@ const Header = () => <nav>
 ReactDOM.render(<Header></Header>, document.getElementById('root'))
 
 
+3.ES 6 class Pattern
+
+Create Components Using ES 6 Class:
+....................................
+
+in order to create component  we need to inherit React.Component
+
+React.Component is base class, which contains the follwing things
+
+1.instance variables
+ props
+ state
+2.instance methods
+
+life cycle methods
+ 
+to be discussed later
+render() - Which returns ReactElement
+ 
+other methods
+to be discussed later
+
+3.static variables
+to be discussed later
+
+import React from 'react';
+import ReactDOM from 'react-dom'
 
 
+class Header extends React.Component {
+    
+    render(){
+        return <nav>
+            <h1>IBM !!</h1>
+        </nav>
+    }
+}
 
 
+ReactDOM.render(<Header></Header>, document.getElementById('root'))
+...............................................................................................
+
+Note: 
+  Which pattern is good, or when to use?
+
+ There is no pattern is bad or good.
+
+ In case if react application is running old versions(before 16)
+
+ =>class components 
+     are used to mutate the state using setState method - statefull components
+     Where ever you need life cycle methods
+        
+ =>function components are used to render ui and data - stateless components
+ =>variable components are used just render static markup or tiny components used inside large   components.
 
 
+ In case if react application is running new versions(After 16)
 
+ functions and classes share the same behaviour
+ functions can have state mutations, life cycle methods via a feature called "hooks".
+ funcitional components are very powerfull with respect reuseability.
+..............................................................................................
+
+..............................................................................................	
+				JSX Rules
+..............................................................................................
+
+JSX - Javascript and XML
+
+What is JSX?
+ JSX is dsl language to create user interfaces
+
+What is relationship with XML?
+
+ Inside JSX , we write javascript code and HTML code only not xml code.
+
+Why the term XML is used?
+
+ When we write JSX code, we need stable mark up standards.
+
+You know very well HTML has weak parser  that means 
+ <h1>hello
+when run the code , the html parser does not stop rendering hello, it never throws any error
+
+in order to avoid instability code inside jsx during compilation, JSX team adopted XML Parser rules, since XML parser has strong parser
+
+Basic XML  rules:
+
+1.every opened element must be closed
+  <h1>Hello</h1>
+  <Welcome></Welcome>
+ some elements may not have closing tag
+  <img /> : image element has no child elements : self closing. 
+
+2. In xml you must have one single root element.
+  all elements must be organized under single root element.
+
+ <h1>Welcome to React</h1>
+ <p>Path finder</p>
+
+In html what can be root element
+ <div>,<span>,all html 5 layout elements header,footer,section,aside...
+
+3.Component names should start with Uppercase,generally would be noun.
+
+
+eg:
+import React from "react";
+import ReactDOM from 'react-dom';
+
+const Heading = ()=>{ 
+    return <h1>Hello
+}
+
+ReactDOM.render(<Heading></Heading>, document.getElementById('root'));
+
+src\index.js
+  Line 8:35:  Parsing error: Unterminated JSX contents. (8:35)
+
+
+Elements with no child : self closing.
+import React from "react";
+import ReactDOM from 'react-dom';
+
+const Heading = ()=>{ 
+    return <h1>Hello</h1>
+}
+
+//ReactDOM.render(<Heading></Heading>, document.getElementById('root'));
+ReactDOM.render(<Heading/>, document.getElementById('root'));
+
+..............................................................................................
+
+import React from "react";
+import ReactDOM from 'react-dom';
+
+const Heading = ()=>{ 
+    return <h1>Hello</h1>
+            <h2>Sapient</h2>
+}
+
+//ReactDOM.render(<Heading></Heading>, document.getElementById('root'));
+ReactDOM.render(<Heading/>, document.getElementById('root'));
+
+ Parsing error: Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment <>...</>? (6:12)
+
+webpack 5.70.0 compiled with 2 errors in 41 ms
+
+How to fix this problem?
+  we need to wrap inside root/parent element.
+
+What can be parent element?
+
+  =>any html container  elements -  table,div,span,header,footer,address,nav
+  =>you can use other components -  Tab,Dashboard....
+
+.............
+Right Code;
+import React from "react";
+import ReactDOM from 'react-dom';
+
+const Heading = () => {
+    return <div>
+        <h1>Hello</h1>
+        <h2>Sapient</h2>
+    </div>
+}
+
+//ReactDOM.render(<Heading></Heading>, document.getElementById('root'));
+ReactDOM.render(<Heading />, document.getElementById('root'));
+..............................................................................................
+Component names should start with Uppercase,generally would be noun.
+
+import React from "react";
+import ReactDOM from 'react-dom';
+
+const heading = () => {
+    return <div>
+        <h1>Hello</h1>
+        <h2>Sapient</h2>
+    </div>
+}
+
+//ReactDOM.render(<Heading></Heading>, document.getElementById('root'));
+ReactDOM.render(<heading />, document.getElementById('root'));
+
+react-dom.development.js:67 Warning: The tag <heading> is unrecognized in this browser. If you meant to render a React component, start its name with an uppercase letter.
+    at heading
+
+Here it wont throw any error,but it wont render any thing in the screen.
+you can see warnings in the console. you have to fix it.  
+..............................................................................................
+..............................................................................................
+				 How jsx code gets compiled?
+
+How code gets compiled?
+
+source code: jsx code
+
+function Welcome() {
+      return <h1>Welcome To React!</h1>;
+}
+	|
+     babel.js - compiler 
+|	
+|
+compiled code
+function Welcome() {
+  return React.createElement(
+    'h1',
+    null,
+    'Welcome To React!'
+  );
+}
+|
+runtime : react engine
+function Welcome() {
+  return React.createElement(
+    'h1',
+    null,
+    'Welcome To React!'
+  );
+}
+|
+//React.createElement
+function createElement(args){
+   document.createElement(args); // low level api call
+..............................................................................................
+				Component Composition
+..............................................................................................
+
+How to break large ui into smaller and smallar.
+
+Why we need to create components?
+ -Resuablity
+
+DRY
+
+How to create Component tree?
+
+Layouts:
+
+ Page
+   Header
+   Body 
+   Footer
+
+
+import React from "react";
+import ReactDOM from 'react-dom';
+
+const Link = () => <ul>
+    <li><a href="letscreate">Let's Create</a></li>
+    <li><a href="products">Products and Solutions</a></li>
+    <li><a href="consulting">Consulting & Services</a></li>
+    <li><a href="support">Learn & Support</a></li>
+</ul>
+
+const MenuBar = () => <nav>
+        <Link/>
+</nav>
+
+//Header
+const Header = () => <header>
+    <h1>IBM -header</h1>
+    <hr />
+    <MenuBar />
+</header>
+//Body
+const Body = () => <div>
+    <p>
+        International Business Machines Corporation (IBM) is an American multinational technology corporation headquartered in Armonk, New York, with operations in over 171 countries. The company began in 1911, founded in Endicott, New York, by trust businessman Charles Ranlett Flint, as the Computing-Tabulating-Recording Company (CTR) and was renamed "International Business Machines" in 1924. IBM is incorporated in New York
+    </p>
+</div>
+
+//Footer 
+const Footer = () => <header>
+    <h1>IBM-Footer</h1>
+</header>
+//Page
+
+//component linking
+const Page = () => <div>
+    <Header />
+    <Body />
+    <Footer />
+</div>
+
+//Application component
+const App = () => <Page />
+
+ReactDOM.render(<App />, document.getElementById('root'))
+
+..............................................................................................
+				React Dev tools
+..............................................................................................
+
+React dev tool is used to visualize the component tree in the browser, without looking the source code ,how the tree has been constructured.
+
+How to install react dev tool?
+
+https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en
+
+How to use react dev tool?
+
+ 1.lanuch application
+ 2.open dev tool inside chrome
+.............................................................................................
+.............................................................................................
+				Component Compostion and Modularity
+..............................................................................................
+
+In react application, we dont / never dump the code into single file, we need to modularize the application.
+
+File Structure
+Is there a recommended way to structure React projects?
+
+  React doesn’t have any opinions on how you put files into folders. 
+  That said there are a few common approaches popular in the ecosystem you may want to consider.
+
+Grouping by "features" or "routes-menu"
+  One common way to structure projects is to locate CSS, JS, and tests together inside folders grouped by feature or route.
+			
+common or util /
+  Avatar.js
+  Avatar.css
+  APIUtils.js
+  APIUtils.test.js
+feed/
+  index.js
+  Feed.js
+  Feed.css
+  FeedStory.js
+  FeedStory.test.js
+  FeedAPI.js
+profile/
+  index.js
+  Profile.js
+  ProfileHeader.js
+  ProfileHeader.css
+  ProfileAPI.js
+
+Grouping by file type
+ Another popular way to structure projects is to group similar files together, for example:
+
+api/
+  APIUtils.js
+  APIUtils.test.js
+  ProfileAPI.js
+  UserAPI.js
+components/
+  Avatar.js
+  Avatar.css
+  Feed.js
+  Feed.css
+  FeedStory.js
+  FeedStory.test.js
+  Profile.js
+  ProfileHeader.js
+  ProfileHeader.css
+
+Some people also prefer to go further, and separate components into different folders depending on their role in the application. For example, Atomic Design is a design methodology built on this principle. Remember that it’s often more productive to treat such methodologies as helpful examples rather than strict rules to follow.
+
+               "https://bradfrost.com/blog/post/atomic-web-design/"
+
+
+File Name conventions:
+
+ FileName must match component feature  - profile 
+
+File Name can be saved as fileName.js or fileName.jsx
+
+Rules for jsx extensions:
+
+-Root file (index,App) files must not be saved with ".jsx" , root files must be saved only with .js extension.
+
+-Barrel export feature must be used in large application.
+
+
+src/links/link.jsx
+import React from 'react'
+
+const Link = () => <ul>
+    <li><a href="letscreate">Let's Create</a></li>
+    <li><a href="products">Products and Solutions</a></li>
+    <li><a href="consulting">Consulting & Services</a></li>
+    <li><a href="support">Learn & Support</a></li>
+</ul>
+export { Link };
+
+src/menus/menubar.jsx
+import React from 'react'
+import { Link } from '../links/link'
+
+const MenuBar = () => <nav>
+    <Link />
+</nav>
+
+export { MenuBar }
+
+src/header/header.jsx
+import React from 'react'
+import { MenuBar } from '../menus/menubar'
+
+const Header = () => <header>
+    <h1>IBM -header</h1>
+    <hr />
+    <MenuBar />
+</header>
+
+export {Header}
+
+
+src/footer/footer.jsx
+import React from 'react'
+
+//Footer 
+export const Footer = () => <header>
+    <h1>IBM-Footer</h1>
+</header>
+//Page
+
+
+src/body/body.jsx
+import React  from "react"
+
+export const Body = () => <div>
+<p>
+    International Business Machines Corporation (IBM) is an American multinational technology corporation headquartered in Armonk, New York, with operations in over 171 countries. The company began in 1911, founded in Endicott, New York, by trust businessman Charles Ranlett Flint, as the Computing-Tabulating-Recording Company (CTR) and was renamed "International Business Machines" in 1924. IBM is incorporated in New York
+</p>
+</div>
+
+src/page/page.jsx
+import { Header } from '../header/header'
+import { Body } from '../body/body'
+import { Footer } from '../footer/footer'
+
+//component linking
+export const Page = () => <div>
+    <Header />
+    <Body />
+    <Footer />
+</div>
+
+src/App.js
+import React from 'react'
+import { Page } from './page/page'
+
+const App = () => <Page />
+
+export default App;
+
+
+src/index.js
+import ReactDOM from 'react-dom';
+import App from './App';
+
+
+ReactDOM.render(<App />, document.getElementById('root'))
+..............................................................................................
 
 
