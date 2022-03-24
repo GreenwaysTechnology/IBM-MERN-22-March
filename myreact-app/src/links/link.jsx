@@ -1,6 +1,7 @@
 import React from 'react'
+import './link.css'
 
-const Link = () => <ul>
+const Link = () => <ul className="menu">
     <li><a href="letscreate">Let's Create</a></li>
     <li><a href="products">Products and Solutions</a></li>
     <li><a href="consulting">Consulting & Services</a></li>

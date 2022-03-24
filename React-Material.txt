@@ -1378,4 +1378,658 @@ import App from './App';
 ReactDOM.render(<App />, document.getElementById('root'))
 ..............................................................................................
 
+.............................................................................................
+				Barrel export
+.............................................................................................
+
+Use Case :
+
+=>How to avoid multiple import of things from same folder
+=>how to avoid file names while import
+
+Barrel export solves the above problem
+
+src/header
+ -header.jsx
+ -menubar.jsx
+ -index.js
+
+Steps:
+1 inside every subfolders(header,body,profile)
+ create index.js
+
+2.import what ever you want to export outside 
+
+3. you re export again what ever you have imported
+
+
+src/header/index.js
+
+import { Header } from './header'
+import { MenuBar } from './menubar'
+
+//barrel export : Re export
+export { Header, MenuBar }
+.............................................................................................
+..............................................................................................
+				How to Style components
+..............................................................................................
+
+CSS integration:
+................
+
+How to add css to an html element?
+
+=> using class attribute  - external style
+=> using style attribute - inline
+
+HTML :
+<div class="container">
+
+</div>
+
+<div style="background-color:red">
+
+</div>
+
+HTML ATTRIBUTES And JSX:
+
+ We cant /should add html attributes directly in jsx code.
+ JSX uses certain rules for adding html attributes.
+
+ "Since JSX is closer to JavaScript than to HTML, React DOM uses "camelCase property naming convention" instead of HTML attribute names"
+
+For example, class becomes className in JSX, and tabindex becomes tabIndex.
+
+<div className="container" tabIndex>
+
+</div>
+
+List of jsx attributes:
+accept acceptCharset accessKey action allowFullScreen alt async autoComplete
+autoFocus autoPlay capture cellPadding cellSpacing challenge charSet checked
+cite classID className colSpan cols content contentEditable contextMenu controls
+controlsList coords crossOrigin data dateTime default defer dir disabled
+download draggable encType form formAction formEncType formMethod formNoValidate
+formTarget frameBorder headers height hidden high href hrefLang htmlFor
+httpEquiv icon id inputMode integrity is keyParams keyType kind label lang list
+loop low manifest marginHeight marginWidth max maxLength media mediaGroup method
+min minLength multiple muted name noValidate nonce open optimum pattern
+placeholder poster preload profile radioGroup readOnly rel required reversed
+role rowSpan rows sandbox scope scoped scrolling seamless selected shape size
+sizes span spellCheck src srcDoc srcLang srcSet start step style summary
+tabIndex target title type useMap value width wmode wrap
+
+"https://reactjs.org/docs/dom-elements.html"
+
+adding Events Handlers
+
+ <button onClick={method}></button>
+  
+CSS : 
+
+->You can add your own css - custom css
+->you can add third party css frameworks -  bootstrap,materialdesign,spark...
+
+import statement can be used to import js files.
+
+import statement can also be used to import
+=>css files
+=>images
+=>any static assets.
+
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Page } from './layout/page';
+import './index.css' //webpack automatically include this inside bundle
+import './App.css'
+
+const App = () => <div className="App">
+    <Page />
+</div>
+
+ReactDOM.render(<App />, document.getElementById('root'))
+
+Note: if you import css in root file(index.js), those css styles will be available across the applications.
+..............................................................................................
+				Component level css
+.............................................................................................
+if you want to apply/use css for a particular component.
+
+src/header/header.css
+.background {
+    background-color: antiquewhite;
+}
+
+src/header/header.jsx
+import React from 'react';
+import './header.css'
+
+export const Header = () => <header className="background">
+    <h1>Sapient</h1>
+</header>
+.............................................................................................
+			  How to add third party css - bootstrap
+............................................................................................
+
+Steps:
+
+1.install bootstrap
+
+npm install bootstrap --save
+
+2.import bootstrap in index.js
+import 'bootstrap/dist/css/bootstrap.css'
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Page } from './layout/page';
+// import './index.css' //webpack automatically include this inside bundle
+// import './App.css'
+import 'bootstrap/dist/css/bootstrap.css'
+
+const App = () => <div className="container">
+    <Page />
+</div>
+
+ReactDOM.render(<App />, document.getElementById('root'))
+..............................................................................................
+				Style Attribute
+..............................................................................................
+
+
+In html style is just a string
+
+<div style="background-color:red">
+
+In jsx(react) style is object
+
+Style Object is nothing "css property representation in javascript"
+
+CSS styles:
+
+.className {
+  background-color:pink;  //dash case notation
+}
+
+Css styles in javascript
+ In js css styles are represented as camel case notation.
+
+backgroundColor=pink
+
+element.style.backgroundColor=pink
+
+  "https://www.w3schools.com/jsref/dom_obj_style.asp"
+
+
+
+Steps to create style object and attach with element
+
+1.declare style object
+//style object
+const headerStyle = {
+    backgroundColor: 'red'
+};
+2.attach with element
+export const Header = () => <header className="background">
+    <h1 style={headerStyle}>Sapient</h1>
+</header>
+
+
+import React from 'react';
+import './header.css'
+
+//style object
+const headerStyle = {
+    color: 'red'
+};
+
+export const Header = () => <header className="background">
+    <h1 style={headerStyle}>Sapient</h1>
+    <h2 style={{ color: 'blue' }}>Publisis</h2>
+</header>
+..............................................................................................
+..............................................................................................
+				Adding Comments in JSX
+.............................................................................................
+
+Js comments
+//style object
+const headerStyle = {s
+    color: 'red'
+};
+
+JSX Comment:
+
+export const Header = () => <header className="background">
+    {/* Adding style attribute via variables */}
+    <h1 style={headerStyle}>Sapient</h1>
+    {/* this is inline style : adding style object in the same line */}
+    <h2 style={{ color: 'blue' }}>Publisis</h2> 
+</header>
+............................................................................................
+..............................................................................................
+				  Dynamic Page - Data Binding
+..............................................................................................
+
+Types of web
+
+1.static web
+   -only html markup,hand coded.
+2.dynamic web
+   - html is created on fly with data
+
+How to add data in the component /how to bind data in the component?
+
+data can be represented in many ways.
+
+-primitives - numbers,strings,boolean
+-objects - literal objects, objects created out of class/function
+-arrays - it is also object but collection 
+
+How to bind data inside jsx?
+
+let name='subramanian'
+
+<h1>Hello {name} </h1>
+
+{} -  databinding syntax.
+
+data binding can be
+{variable}
+{expression} - {10*10} {getValue()} {emp.id}
+
+
+import React from "react";
+import ReactDOM from "react-dom";
+import 'bootstrap/dist/css/bootstrap.css'
+//profile component
+
+
+function getPoints(){
+   return 10;
+}
+
+
+const Profile = () => {
+    const id = 1;
+    const name = "Subramanian";
+    const status = true;
+    const address = {
+        city: 'coimbatore',
+        state: 'Tamil nadu'
+    }
+    return <div className="container">
+        <h1>Profile Details</h1>
+        <h3>Id  {id}</h3>
+        <h3>Name {name} </h3>
+        {/* React converts boolean values into empty string, if you want to display something , you have to use tenary operator to replace empty string */}
+        <h3>status {status ? "Available" : "Not Available"}</h3>
+        <h3>Points {getPoints() * 2 }</h3>
+        <address>
+            {address.city} {address.state}
+        </address>
+    </div>
+}
+ReactDOM.render(<Profile />, document.getElementById('root'))
+..............................................................................................
+..............................................................................................
+			  Compoent Design Principles of React
+.............................................................................................
+
+
+Data can be declared for a component in two ways.
+
+1.data is supplied from outside the component.
+2.data is supplied within the component
+
+
+1.Data is supplied from outside the component.
+
+When component receives data from the outside, this pattern is called as "property pattern" / props pattern.
+
+Outside the component means what? What is outside for the component?
+
+YOu know very well , react creates components and assembles them in hierachical order(tree)
+in the tree model, the one component called as "parent" component and other components are called child component and sibiling components.
+
+outside means "Parent".
+
+    "Data is supplied from the parent compoent to child component" - Props pattern /Property pattern
+..............................................................................................
+
+How to pass data using props pattern?
+
+import React from "react";
+import ReactDOM from "react-dom";
+import 'bootstrap/dist/css/bootstrap.css'
+
+function add(a, b) {
+    return a + b;
+}
+console.log(add(10, 10))
+
+//child component
+// function Profile(id,name) {
+// function Profile(profile){
+//     return <div className="container">
+//         <h1>Profile Details</h1>
+//         <h3>id {profile.id}</h3>
+//         <h4>Name {profile.name}</h4>     
+//     </div>
+// }
+//props is just variable convention only not syntax.
+// function Profile(props){
+//     return <div className="container">
+//         <h1>Profile Details</h1>
+//         <h3>id {props.id}</h3>
+//         <h4>Name {props.name}</h4>     
+//     </div>
+// }
+const Profile = props => <div className="container">
+    <h1>Profile Details</h1>
+    <h3>id {props.id}</h3>
+    <h4>Name {props.name}</h4>
+    <h4>Status {props.status ? "Avilable" : "Not Available"}</h4>
+    <address>
+        {props.address.city} {props.address.state}
+    </address>
+</div>
+
+//react says that dont pass any values as indivdual paramter.
+//pack all parameters as single literal object and pass that object
+const App = () => {
+    // return Profile(1,"subramanian");
+    //return Profile({id:1,name:"Subramanian",status:true})
+    return <Profile id={1} name="Subramanian" 
+    status={true} 
+    address={{ city: 'Coimbatore', state: 'Tamil Nadu' }} />
+}
+
+
+ReactDOM.render(<App />, document.getElementById('root'))
+
+
+Note: 
+ property vs html attributes
+
+<h1 style="background-color:red">
+     |
+    attribute
+<Profile name="Ram" />
+          |
+      props/property
+
+props and attribtues are syntax based same.
+
+but they are different.
+
+props are special attributes supplied to the components
+attributes are supplied to the html elements.
+..............................................................................................
+			Single Directional /Uni directional data flow Model 
+..............................................................................................
+
+Uni directional data flow model is nothing but passing data from the parent compoent to child components only.
+.............................................................................................
+				 Components Design and Properties
+.............................................................................................
+
+Components in the tree going to get data from the parent component only, even if the components are in the nested.
+
+
+Break the UI into components, pass data from parent to child
+
+Use case: -  Requirement
+
+    Profile
+	id
+        firstName
+        lastName
+        MiddleName
+        gender
+        address
+        email
+        phone
+        status
+        company
+        expereince
+        education
+        skills
+    ........
+    DashBoard
+         AccountSummary
+		Name,AccountNo,Branch,AccountBalance
+         Transaction
+		Narration,date,type,closingbalance
+         Fund Transfer
+		Name,bank,Branch,ifccode, actions
+
+.............................................................................................
+
+Convert the Profile requirement into Components.
+
+ProfileComponent
+	id
+	status
+        skills
+NameComponent
+        firstName
+        lastName
+        MiddleName
+GenderComponent
+        gender
+AddressComponent
+        address
+ContactComponent
+        email
+        phone
+CompanyComponent
+        company
+ExperienceCompoent
+        expereince
+EducationCompoent
+        education
+           -school
+           -degree
+	   
+
+src/index.js
+
+import React from "react";
+import ReactDOM from "react-dom";
+import 'bootstrap/dist/css/bootstrap.css'
+import { Profile } from "./profile";
+
+const App = () => {
+    return <Profile id={100} firstName="Subramanian" middleName="" lastName="Murugan" />
+}
+
+
+ReactDOM.render(<App />, document.getElementById('root'))
+
+
+src/profile/profile.jsx
+
+import React from 'react';
+import { Name } from './'
+import { Address } from '../address'
+
+
+export const Profile = props => <div>
+    <h1>Profile Details</h1>
+    <h4>id {props.id}</h4>
+    <Name firstName={props.firstName} middleName={props.middleName} lastName={props.lastName} />
+    <Address />
+</div>
+
+
+src/profile/name.jsx
+
+import React from 'react';
+export const Name = props => <div>
+    <h4>First Name {props.firstName}</h4>
+    <h4>Middle Name {props.middleName}</h4>
+    <h4>Last Name{props.lastName}</h4>
+</div>
+
+src/profile/index.js
+
+import { Name } from "./name";
+import { Profile } from "./profile";
+
+export { Name, Profile }
+
+
+Assingment:
+  Write all the Profile components, pass data show all profile data.
+..............................................................................................
+..............................................................................................
+			    class Components and props
+..............................................................................................
+
+class Profile extends React.Component {
+    
+    render(){
+        return <div className="container">
+                <h1>Profile details</h1>
+        </div>
+    }
+}
+
+In the class components  how to access props?
+
+ React.Component base class has instance variable "props" , this variables gets initalized when ever we pass props
+
+
+=>In side Component class , props instance variable by default gets initalized with empty literal object
+
+   class Compoent{
+     props = {};
+   }
+=> As soon as we pass properties , props instance variable's object gets augmented(added)
+
+function props vs class props
+
+=>function props are passed as parameter
+=>class props are initalized with help of instance variable
+
+import React from "react";
+import ReactDOM from "react-dom";
+import 'bootstrap/dist/css/bootstrap.css'
+
+class Profile extends React.Component {
+
+    render(){
+     console.log(this.props)
+        return <div className="container">
+                <h1>Profile details</h1>
+                <h2>Id : {this.props.id}</h2>
+                <h2>Name {this.props.name}</h2>
+                <h2>Status {this.props.status ? "Avaiable" : "Not Available"}</h2>
+        </div>
+    }
+}
+
+
+const App = () => {
+    return <Profile id={1} name="Subramanian" status={true} />
+}
+
+
+ReactDOM.render(<App />, document.getElementById('root'))
+..............................................................................................
+..............................................................................................
+			What if i dont supply Props to Component -Default Props
+.............................................................................................
+if you dont pass any property, we can supply default props which saves lot of runtime bugs.
+
+When you design component, it is highly recommended to have default Props- This is best Practice
+
+
+import React from "react";
+import ReactDOM from "react-dom";
+import 'bootstrap/dist/css/bootstrap.css'
+
+//default Args
+function multiply(a = 0, b = 0) {
+    console.log(`a ${a} b ${b}`)
+    return a * b; //NaN
+}
+console.log(multiply(6, 3))
+console.log(multiply())
+
+
+const Profile = props => {
+    return <div className="container">
+        <h1>Profile details</h1>
+        <h2>Id : {props.id}</h2>
+        <h2>Name {props.name.toUpperCase()}</h2>
+        <h2>Status {props.status ? "Avaiable" : "Not Available"}</h2>
+    </div>
+}
+//if you dont pass any property, we can supply default props which saves lot of runtime bugs.
+Profile.defaultProps = {
+    id: 0,
+    name: 'default',
+    status: false
+}
+const App = () => {
+    return <div>
+        <Profile />
+        <Profile id={1} />
+        <Profile id={1} name="ram" status={true}/>
+
+    </div>
+}
+
+
+ReactDOM.render(<App />, document.getElementById('root'))
+
+
+import React from "react";
+import ReactDOM from "react-dom";
+import 'bootstrap/dist/css/bootstrap.css'
+
+class Profile extends React.Component {
+    //default props inside class : which is not recommended
+    static defaultProps = {
+        id: 0,
+        name: 'default',
+        status: false
+    }
+    render() {
+        console.log(this.props)
+        return <div className="container">
+            <h1>Profile details</h1>
+            <h2>Id : {this.props.id}</h2>
+            <h2>Name {this.props.name}</h2>
+            <h2>Status {this.props.status ? "Avaiable" : "Not Available"}</h2>
+        </div>
+    }
+}
+// Profile.defaultProps = {
+//     id: 0,
+//     name: 'default',
+//     status: false
+// }
+const App = () => {
+    return <div>
+        <Profile />
+        <Profile id={1} />
+        <Profile id={1} name="ram" status={true} />
+
+    </div>
+}
+
+
+ReactDOM.render(<App />, document.getElementById('root'))
+
+
+
+
+
+
+
 
