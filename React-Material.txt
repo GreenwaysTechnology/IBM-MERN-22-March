@@ -2026,6 +2026,548 @@ const App = () => {
 
 ReactDOM.render(<App />, document.getElementById('root'))
 
+..............................................................................................
+			Property Validation or Property Constraints
+.............................................................................................
+
+Javascript is dynamic typed language, meaning that the type of variable is not verified during compile time.
+
+dyamic typed/weak typing
+
+var a=1;
+console.log(a) => 1 => type is number
+
+you can reinitalize the with different types
+a="hello"
+console.log(a) => "hello" => type is string
+
+In c: - Strongly typed  /static typed
+int a=10
+a="hello" -compile time error 
+
+Type script : Strongly static typed javascript
+
+let a:number =10;
+a="hello"
+
+Inside compoent if pass data , can i enforce the react that accept only the type what i want.
+
+Yes , we can do with help of property validator.
+Property validator gives only warning , it wont stop rendering incase there is any type error.
+
+
+in order to write property rule, react provides a separate lib "prop-types"
+
+Steps:
+npm install --save prop-types
+
+
+import React from "react";
+import ReactDOM from "react-dom";
+import 'bootstrap/dist/css/bootstrap.css'
+import PropTypes from 'prop-types';
+
+const Profile = props => {
+    return <div className="container">
+        <h1>Profile details</h1>
+        <h2>Id : {props.id}</h2>
+        <h2>Name {props.name.toUpperCase()}</h2>
+        <h2>Status {props.status ? "Avaiable" : "Not Available"}</h2>
+    </div>
+}
+//if you dont pass any property, we can supply default props which saves lot of runtime bugs.
+Profile.defaultProps = {
+    id: 0,
+    name: 'default',
+    status: false
+}
+//set property validation rules for property
+Profile.propTypes = {
+    //rules for property
+    id: PropTypes.number,
+    name:PropTypes.string,
+    status:PropTypes.bool
+}
+
+const App = () => {
+    return <div>
+        <Profile id={"a;dfjsadlf"} name="ram" status={"test"} />
+
+    </div>
+}
+ReactDOM.render(<App />, document.getElementById('root'))
+
+Output:
+Warning: Failed prop type: Invalid prop `id` of type `string` supplied to `Profile`, expected `number`.
+    at Profile (http://localhost:3000/static/js/bundle.js:38:33)
+    at App
+...........................................................................................
+				Property validation in class Components
+import React from "react";
+import ReactDOM from "react-dom";
+import 'bootstrap/dist/css/bootstrap.css'
+import PropTypes from 'prop-types';
+
+class Profile extends React.Component {
+    //default props inside class : which is not recommended
+    static defaultProps = {
+        id: 0,
+        name: 'default',
+        status: false
+    }
+    static propTypes = {
+        //rules for property
+        id: PropTypes.number,
+        name:PropTypes.string,
+        status:PropTypes.bool
+    }
+    
+    render() {
+        console.log(this.props)
+        return <div className="container">
+            <h1>Profile details</h1>
+            <h2>Id : {this.props.id}</h2>
+            <h2>Name {this.props.name}</h2>
+            <h2>Status {this.props.status ? "Avaiable" : "Not Available"}</h2>
+        </div>
+    }
+}
+// Profile.defaultProps = {
+//     id: 0,
+//     name: 'default',
+//     status: false
+// }
+//set property validation rules for property
+// Profile.propTypes = {
+//     //rules for property
+//     id: PropTypes.number,
+//     name:PropTypes.string,
+//     status:PropTypes.bool
+// }
+
+const App = () => {
+    return <div>
+         <Profile id={1} name="ram" status={true} />
+
+    </div>
+}
+ReactDOM.render(<App />, document.getElementById('root'))
+
+https://www.npmjs.com/package/protypes
+.............................................................................................
+
+.............................................................................................
+
+Compoent Design Principles:
+
+	Component is designed based on "functional programming principles".
+ React lib has been designed based on functional programming principles.
+
+
+Functional Programming principles:
+
+1.pure functions
+
+ in order to certifiy the function is pure , there are two rules.
+
+A.function receives the set of args, which should return the same.
+
+
+//pure function.
+
+//pure function or not
+function getMessage(message) {
+    return message;
+}
+console.log(getMessage('hello'))
+
+//impure function
+function calculate(a) {
+    let b = 100;
+    // let res = a * 10
+    // return res;
+    return a * b;
+}
+
+
+function should not do any "side effects"(changing the input parameters, local variable,IO operation), if fun does, that function is called "impure function".
+
+
+In React where pure function is used.
+ 
+  In the component design.
+
+        "Every Component is pure function with respect to props"
+
+ Every component receives props as parameter , returns the same without mutation(side effects).
+
+import React from "react";
+import ReactDOM from "react-dom";
+import 'bootstrap/dist/css/bootstrap.css'
+
+//This function is pure function : function gets props as input and return as it is without muation.
+const Greeter = props => {
+    return <div>
+        <h1>Hello {props.name}</h1>
+    </div>
+}
+
+const App = () => <div>
+    <Greeter name="Subramnaian" />
+</div>
+ReactDOM.render(<App />, document.getElementById('root'))
+
+		    "Props are readonly"  -props should not/cant be changed
+
+
+B. to be discussed later.
+		..............................................................................................
+				Property Rethrow
+..............................................................................................
+
+If a component receives property, the same set of property to be passed down to its childern.
+		
+
+import React from 'react';
+import ReactDOM from 'react-dom'
+
+
+const ProfileMaster = props => {
+    return <ProfileDetails
+        id={props.id}
+        name={props.name}
+        status={props.status}
+        city={props.city} />
+}
+
+const ProfileDetails = props => {
+
+    return <div>
+            <h1>id {props.id}</h1>
+            <h1>Name {props.name}</h1>
+            <h1>City {props.city}</h1>
+            <h1>Status {props.status ? "available" : "Not Available"}</h1>
+    </div>
+
+}
+
+const App = props => {
+    return <div>
+        <ProfileMaster id={1} name="subramanian" status={true} city="coimbatore" />
+    </div>
+}
+
+
+ReactDOM.render(<App />, document.getElementById('root'))
+
+
+In the above code , we pass property to child component after reteriving manually ,This makes your code so complex
+
+There is way to simplify the code using E6 "Spread Operator ..."
+..............................................................................................
+				Property Rethrow
+..............................................................................................
+
+If a component receives property, the same set of property to be passed down to its childern.
+
+import React from 'react';
+import ReactDOM from 'react-dom'
+
+
+const ProfileMaster = props => {
+    return <ProfileDetails
+        id={props.id}
+        name={props.name}
+        status={props.status}
+        city={props.city} />
+}
+
+const ProfileDetails = props => {
+
+    return <div>
+            <h1>id {props.id}</h1>
+            <h1>Name {props.name}</h1>
+            <h1>City {props.city}</h1>
+            <h1>Status {props.status ? "available" : "Not Available"}</h1>
+    </div>
+
+}
+const App = props => {
+    return <div>
+        <ProfileMaster id={1} name="subramanian" status={true} city="coimbatore" />
+    </div>
+}
+
+
+ReactDOM.render(<App />, document.getElementById('root'))
+
+In the above code , we pass property to child component after reteriving manually ,This makes your code so complex
+
+
+import React from 'react';
+import ReactDOM from 'react-dom'
+
+
+//passing props mannually to child
+// const ProfileMaster = props => {
+//     return <ProfileDetails
+//         id={props.id}
+//         name={props.name}
+//         status={props.status}
+//         city={props.city} />
+// }
+//passing props using property rethrow method, using spread operator
+
+const ProfileMaster = props => {
+    // spread notation
+    //{...props} pass all properties which has been received from the parent
+    return <ProfileDetails {...props} title="Profile Details" />
+}
+
+const ProfileDetails = props => {
+
+    return <div>
+        <h1>{props.title}</h1>
+        <h1>id {props.id}</h1>
+        <h1>Name {props.name}</h1>
+        <h1>City {props.city}</h1>
+        <h1>Status {props.status ? "available" : "Not Available"}</h1>
+    </div>
+
+}
+const App = props => {
+    return <div>
+        <ProfileMaster id={1} name="subramanian" status={true} city="coimbatore" />
+    </div>
+}
+
+ReactDOM.render(<App />, document.getElementById('root'))
+..............................................................................................
+				Object Destructuring and React
+.............................................................................................
+//withoout object destructuring
+// function showEmployee(employee) {
+//     console.log(`Id ${employee.id}`)
+//     console.log(`Name ${employee.name}`)
+//     console.log(`city ${employee.address.city}`)
+// }
+// function showEmployee(employee) {
+//     //destructure the object
+//     const { id, name, address: { city } } = employee
+//     console.log(`Id ${id}`)
+//     console.log(`Name ${name}`)
+//     console.log(`city ${city}`)
+// }
+// const showEmployee = (employee) => {
+//     const { id, name, address: { city } } = employee
+//     console.log(`Id ${id}`)
+//     console.log(`Name ${name}`)
+//     console.log(`city ${city}`)
+// }
+
+const showEmployee = ({ id, name, address: { city } }) => {
+    // const { id, name, address: { city } } = employee
+    console.log(`Id ${id}`)
+    console.log(`Name ${name}`)
+    console.log(`city ${city}`)
+}
+
+showEmployee({ id: 1, name: 'subramanian', address: { city: 'coimbatore' } })
+/////////////////////////////////////////////////////////////////////////////////////
+//How to return object with dynamic values and destructure
+
+// const getStockValue = (symbol = 'google', qty = 0, value = 0) => {
+//     return {
+//         symbol: 'google',
+//         qty: 100,
+//         value: 10000
+//     }
+// }
+// const getStockValue = (symbol = 'google', qty = 0, value = 0) => {
+//     //destructure
+//     //leftside: object instance variable
+//     //rightside: local variable
+//     //if leftside and rightside is same  symbol:symbol , remove one
+//     return {
+//         symbol,
+//         qty,
+//         value
+//     }
+// }
+
+const getStockValue = (symbol = 'google', qty = 0, value = 0) =>({
+        symbol,
+        qty,
+        value
+})
+
+console.log(getStockValue('google', 100, 10000))
+
+import React from 'react';
+import ReactDOM from 'react-dom'
+
+
+const ProfileMaster = props => {
+    return <ProfileDetails {...props} title="Profile Details" />
+}
+//without destrucing
+// const ProfileDetails = props => {
+//     return <div>
+//         <h1>{props.title}</h1>
+//         <h1>id {props.id}</h1>
+//         <h1>Name {props.name}</h1>
+//         <h1>City {props.city}</h1>
+//         <h1>Status {props.status ? "available" : "Not Available"}</h1>
+//     </div>
+// }
+//destrucing inside function
+// const ProfileDetails = props => {
+//     const { title, id, name, city, status } = props;
+//     return <div>
+//         <h1>{title}</h1>
+//         <h1>id {id}</h1>
+//         <h1>Name {name}</h1>
+//         <h1>City {city}</h1>
+//         <h1>Status {status ? "available" : "Not Available"}</h1>
+//     </div>
+// }
+
+// //argument destrucing
+const ProfileDetails = ({ title, id, name, city, status }) => <div>
+    <h1>{title}</h1>
+    <h1>id {id}</h1>
+    <h1>Name {name}</h1>
+    <h1>City {city}</h1>
+    <h1>Status {status ? "available" : "Not Available"}</h1>
+</div>
+
+const App = props => {
+    return <div>
+        <ProfileMaster id={1} name="subramanian" status={true} city="coimbatore" />
+    </div>
+}
+
+
+ReactDOM.render(<App />, document.getElementById('root'))
+..............................................................................................
+..............................................................................................
+				What  can be a prop
+.............................................................................................
+
+Prop can be 
+
+1.data - numbers,strings,boolean,objects,arrays
+2.function - function as prop
+3.component /any html element can be prop
+
+Prop can be 
+
+1.static prop - discussed already
+2.dynamic prop 
+
+import React from 'react';
+import ReactDOM from 'react-dom'
+import logo from './logo.svg';
+
+
+const Wrapper = props => <div>
+    {props.children}
+</div>
+
+const Button = () => <button>Click</button>
+const Logo = props => <div>{props.children}</div>
+
+const App = () => <div>
+    <Wrapper >
+        {/* Button as prop */}
+        <Button />
+        <Button />
+        <Button />
+        <Button />
+        <Button />
+        <Logo>
+            {/* img src as props */}
+            <img src={logo} />
+        </Logo>
+
+    </Wrapper>
+</div>
+
+ReactDOM.render(<App />, document.getElementById('root'))
+..............................................................................................
+				Lists(Arrays) and Keys
+..............................................................................................
+
+How to render list of components / data?
+
+Javascript provides an array to store data.
+
+Array of primitives
+Array of objects
+
+Lists and UI design:
+...................
+
+List can be used to design different types of  ui.
+
+1.ListView -  ul ...li
+2.cardView  - div...div
+3.gridView - table ..tr
+
+
+import React from 'react';
+import ReactDOM from 'react-dom'
+import TODOS from './mock-todos/todos'
+
+const NumberList = ({ scores }) => {
+    //variable pattern
+    const listItems = scores.map(item => <li key={item}>{item}</li>)
+    return <div>
+        <ul>
+            {/* {props.scores.map((item) => {
+                return <li key={item}>{item}</li>
+            })} */}
+            {listItems}
+        </ul>
+    </div>
+}
+
+const TodoList = props => <div>
+    {props.todos.map(todo => <TodoItem todo={todo} />)}
+</div>
+const TodoItem = ({ todo }) => <div key={todo.id}>
+    <p>id {todo.id}</p>
+    <p>title {todo.title}</p>
+    <p>Status {todo.completed ? "done" : "not Completed"}</p>
+</div>
+
+
+const scores = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+const App = props => <div>
+    <NumberList scores={scores} />
+    <TodoList todos={TODOS} />
+</div>
+
+ReactDOM.render(<App />, document.getElementById('root'))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
