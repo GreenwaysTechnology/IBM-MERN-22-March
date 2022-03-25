@@ -1,37 +1,80 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import React from 'react';
+import ReactDOM from 'react-dom'
 import 'bootstrap/dist/css/bootstrap.css'
+import { Component } from 'react';
 
-//default Args
-function multiply(a = 0, b = 0) {
-    console.log(`a ${a} b ${b}`)
-    return a * b; //NaN
+let TodoApi = {
+    getAllTodos(url) {
+        return fetch(url);
+    }
 }
-console.log(multiply(6, 3))
-console.log(multiply())
+const Error = props => {
+    return <>
+        <h2>{props.error}</h2>
+    </>
+}
+const Spinner = props => {
+    return <>
+        <h2 style={{ backgroundColor: 'yellow' }}>Loading...</h2>
+    </>
+}
+class Todo extends Component {
+    //state has three things data,spinnerstatus,errror
+    state = {
+        error: null,
+        isLoaded: false, //spiner status
+        todos: [] // data
+    }
+    componentDidMount() {
+        //fetch 
+        TodoApi.getAllTodos('https://jsonplaceholder.typicode.com/todos')
+            .then(response => {
+                return response.json()
+            })
+            .then(todos => {
+                //  console.log(todos);
+                setTimeout(() => {
+                    this.setState(previousState => {
+                        return { ...previousState, todos: previousState.todos.concat(todos), isLoaded: true };
+                    });
+                }, 5000)
 
-const Profile = props => {
-    return <div className="container">
-        <h1>Profile details</h1>
-        <h2>Id : {props.id}</h2>
-        <h2>Name {props.name.toUpperCase()}</h2>
-        <h2>Status {props.status ? "Avaiable" : "Not Available"}</h2>
-    </div>
-}
-//set defaultProps if property not supplied , default property initalized
-//if you dont pass any property, we can supply default props which saves lot of runtime bugs.
-Profile.defaultProps = {
-    id: 0,
-    name: 'default',
-    status: false
+            })
+            .catch(err => {
+                this.setState({
+                    isLoaded: true,
+                    err
+                });
+            });
+    }
+    render() {
+        const { error, isLoaded, todos } = this.state;
+        if (error) {
+            return <Error error={error} />
+        } else if (!isLoaded) {
+            return <Spinner />
+        } else {
+            return <TodoList todos={todos} />
+        }
+    }
 }
 
-const App = () => {
-    return <div>
-        <Profile />
-        <Profile  name="Subramanian" />
-        <Profile id={100} name="Subramanian" status={true} />
-
-    </div>
+const TodoList = props => {
+    const { todos } = props
+    return <ul className="list-group">
+        {todos.map((todo, index) => (
+            <li key={index}>
+                <span className="badge badge-pill badge-primary">
+                    {todo.id}
+                </span>
+                <span>
+                    {todo.title}
+                </span>
+            </li>
+        ))}
+    </ul>
 }
+const App = () => <div className="container">
+    <Todo />
+</div>
 ReactDOM.render(<App />, document.getElementById('root'))
