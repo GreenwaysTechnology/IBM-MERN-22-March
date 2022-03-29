@@ -1,0 +1,4 @@
+https://exploringjs.com/es6/
+https://github.com/GreenwaysTechnology/Sapient-XT-React-Mar22
+javascript good parts
+mdn tutorial
